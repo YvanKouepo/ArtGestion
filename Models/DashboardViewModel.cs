@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace ArtGestion.Models
 {
     public class DashboardViewModel
@@ -8,6 +10,12 @@ namespace ArtGestion.Models
         public int BientotExpires { get; set; }
         public int Expires { get; set; }
         public int AlertesNonLues { get; set; }
+
+        public int? RegionId { get; set; }
+        public string? Statut { get; set; }
+
+        public List<SelectListItem> Regions { get; set; } = new();
+        public List<SelectListItem> Statuts { get; set; } = new();
 
         public List<string> RegionsLabels { get; set; } = new();
         public List<int> RegionsCounts { get; set; } = new();
