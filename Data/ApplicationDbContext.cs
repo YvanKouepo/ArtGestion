@@ -26,7 +26,9 @@ namespace ArtGestion.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
+            modelBuilder.Entity<Alerte>()
+                .HasIndex(a => new { a.TitreExploitationId, a.TypeAlerte })
+                .IsUnique();
             modelBuilder.Entity<Alerte>()
                 .HasOne(a => a.TitreExploitation)
                 .WithMany()

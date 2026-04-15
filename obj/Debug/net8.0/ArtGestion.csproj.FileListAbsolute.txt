@@ -103,3 +103,4 @@ C:\Users\Yvan Kouepo\SI_ART\ArtGestion\bin\Debug\net8.0\ArtGestion.runtimeconfig
 C:\Users\Yvan Kouepo\SI_ART\ArtGestion\bin\Debug\net8.0\ArtGestion.pdb
 C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net8.0\ArtGestion.genruntimeconfig.cache
 C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net8.0\ref\ArtGestion.dll
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net8.0\ArtGestion.sourcelink.json

@@ -18,7 +18,7 @@ namespace ArtGestion.Controllers
         {
 
             await AlerteService.GenererAlertesExpirationAsync(_context);
-            await ServicesMetier.AlerteService.GenererAlertesExpirationAsync(_context);
+            
             var alertes = await _context.Alertes
                 .Include(a => a.TitreExploitation)
                     .ThenInclude(t => t!.Exploitant)
