@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center">
+    <h1 class="display-5">Bienvenue dans ArtGestion</h1>
+    <p class="lead">Système d'information pour la gestion des exploitants, titres, alertes et logs.</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Exploitants</h5>
+                <p class="card-text">Créer et consulter les exploitants.</p>
+                <a asp-controller="Exploitants" asp-action="Index" class="btn btn-primary">Ouvrir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Titres</h5>
+                <p class="card-text">Gérer les titres d'exploitation.</p>
+                <a asp-controller="TitresExploitation" asp-action="Index" class="btn btn-primary">Ouvrir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Alertes</h5>
+                <p class="card-text">Consulter les alertes d'expiration.</p>
+                <a asp-controller="Alertes" asp-action="Index" class="btn btn-warning">Ouvrir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Logs</h5>
+                <p class="card-text">Consulter le journal des actions.</p>
+                <a asp-controller="LogsActions" asp-action="Index" class="btn btn-dark">Ouvrir</a>
+            </div>
+        </div>
+    </div>
+</div>

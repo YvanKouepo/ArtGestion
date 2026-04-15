@@ -1,0 +1,52 @@
+@model IEnumerable<ArtGestion.Models.LogAction>
+
+@{
+    ViewData["Title"] = "Journal des actions";
+}
+
+<h2>Journal des actions</h2>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-3">
+        <label class="form-label">Type d'action</label>
+        <input type="text" name="typeAction" value="@ViewBag.TypeAction" class="form-control" placeholder="Ex: Création" />
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Entité</label>
+        <input type="text" name="entite" value="@ViewBag.Entite" class="form-control" placeholder="Ex: Exploitant" />
+    </div>
+
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">Filtrer</button>
+        <a asp-action="Index" class="btn btn-secondary">Réinitialiser</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type d'action</th>
+            <th>Entité</th>
+            <th>ID entité</th>
+            <th>Description</th>
+            <th>Service</th>
+            <th>Utilisateur</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.DateAction.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@item.TypeAction</td>
+            <td>@item.Entite</td>
+            <td>@item.EntiteId</td>
+            <td>@item.Description</td>
+            <td>@item.Service?.Nom</td>
+            <td>@item.Utilisateur?.NomComplet</td>
+        </tr>
+    }
+    </tbody>
+</table>

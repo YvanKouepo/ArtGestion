@@ -1,0 +1,8 @@
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.AssemblyInfoInputs.cache
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.AssemblyInfo.cs
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.csproj.CoreCompileInputs.cache
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.RazorAssemblyInfo.cache
+C:\Users\Yvan Kouepo\SI_ART\ArtGestion\obj\Debug\net10.0\ArtGestion.RazorAssemblyInfo.cs

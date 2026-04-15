@@ -1,0 +1,48 @@
+@model IEnumerable<ArtGestion.Models.Alerte>
+
+@{
+    ViewData["Title"] = "Alertes";
+}
+
+<h2>Alertes d'expiration</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Message</th>
+            <th>Date génération</th>
+            <th>État</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TypeAlerte</td>
+            <td>@item.Message</td>
+            <td>@item.DateGeneration.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>
+                @if (item.EstLue)
+                {
+                    <span class="badge bg-success">Lue</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning text-dark">Non lue</span>
+                }
+            </td>
+            <td>
+                @if (!item.EstLue)
+                {
+                    <form asp-action="MarquerCommeLue" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-sm btn-primary">Marquer comme lue</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

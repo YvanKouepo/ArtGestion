@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Tableau de bord";
+}
+
+<h2>Tableau de bord</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card bg-primary text-white mb-3">
+            <div class="card-body">
+                <h5>Exploitants</h5>
+                <h3>@ViewBag.TotalExploitants</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-dark text-white mb-3">
+            <div class="card-body">
+                <h5>Total Titres</h5>
+                <h3>@ViewBag.TotalTitres</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white mb-3">
+            <div class="card-body">
+                <h5>Actifs</h5>
+                <h3>@ViewBag.Actifs</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark mb-3">
+            <div class="card-body">
+                <h5>Bientôt expirés</h5>
+                <h3>@ViewBag.BientotExpires</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-danger text-white mb-3">
+            <div class="card-body">
+                <h5>Expirés</h5>
+                <h3>@ViewBag.Expires</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-info text-white mb-3">
+            <div class="card-body">
+                <h5>Alertes non lues</h5>
+                <h3>@ViewBag.AlertesNonLues</h3>
+            </div>
+        </div>
+    </div>
+
+</div>

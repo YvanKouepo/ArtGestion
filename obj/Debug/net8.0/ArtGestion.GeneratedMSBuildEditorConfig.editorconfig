@@ -1,0 +1,75 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ArtGestion
+build_property.RootNamespace = ArtGestion
+build_property.ProjectDir = C:\Users\Yvan Kouepo\SI_ART\ArtGestion\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Yvan Kouepo\SI_ART\ArtGestion
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Alertes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxlcnRlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Exploitants/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwbG9pdGFudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Exploitants/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhwbG9pdGFudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/LogsActions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9nc0FjdGlvbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/TitresExploitation/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGl0cmVzRXhwbG9pdGF0aW9uXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/TitresExploitation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGl0cmVzRXhwbG9pdGF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yvan Kouepo/SI_ART/ArtGestion/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-tw4p2at7s6
