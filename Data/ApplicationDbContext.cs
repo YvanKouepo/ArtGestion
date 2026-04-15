@@ -26,6 +26,133 @@ namespace ArtGestion.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Region>().HasData(
+    new Region { Id = 1, Nom = "Littoral", Code = "LT", Actif = true },
+    new Region { Id = 2, Nom = "Sud-Ouest", Code = "SW", Actif = true }
+);
+
+modelBuilder.Entity<Ville>().HasData(
+    new Ville { Id = 1, Nom = "Douala", RegionId = 1, Actif = true },
+    new Ville { Id = 2, Nom = "Buea", RegionId = 2, Actif = true }
+);
+
+modelBuilder.Entity<TypeEntreprise>().HasData(
+    new TypeEntreprise { Id = 1, Libelle = "Opérateur", Actif = true },
+    new TypeEntreprise { Id = 2, Libelle = "Fournisseur", Actif = true }
+);
+
+modelBuilder.Entity<Service>().HasData(
+    new Service { Id = 1, Code = "SSVTSE", Nom = "Service du Suivi des Services, de la Veille Technologique et des Statistiques Économiques", Actif = true }
+);
+
+modelBuilder.Entity<Utilisateur>().HasData(
+    new Utilisateur
+    {
+        Id = 1,
+        NomComplet = "Admin SSVTSE",
+        Login = "admin",
+        MotDePasseHash = "temp-hash",
+        Email = "admin@art.local",
+        ServiceId = 1,
+        Role = "Admin",
+        EstResponsableService = true,
+        Actif = true,
+        DateCreation = DateTime.UtcNow
+    }
+);
+
+modelBuilder.Entity<TypeTitre>().HasData(
+    new TypeTitre
+    {
+        Id = 1,
+        Libelle = "Licence",
+        DureeValidite = 5,
+        UniteDuree = "Ans",
+        Actif = true
+    }
+);
+
+           modelBuilder.Entity<Exploitant>().HasData(
+    new Exploitant
+    {
+        Id = 1,
+        CodeExploitant = "EXP001",
+        NomExploitant = "MTN Cameroun",
+        RegionId = 1,
+        VilleId = 1,
+        ServiceId = 1,
+        UtilisateurId = 1,
+        TypeEntrepriseId = 1
+    },
+    new Exploitant
+    {
+        Id = 2,
+        CodeExploitant = "EXP002",
+        NomExploitant = "Orange Cameroun",
+        RegionId = 1,
+        VilleId = 1,
+        ServiceId = 1,
+        UtilisateurId = 1,
+        TypeEntrepriseId = 1
+    },
+    new Exploitant
+    {
+        Id = 3,
+        CodeExploitant = "EXP003",
+        NomExploitant = "Nexttel",
+        RegionId = 2,
+        VilleId = 2,
+        ServiceId = 1,
+        UtilisateurId = 1,
+        TypeEntrepriseId = 2
+    }
+);
+
+modelBuilder.Entity<TitreExploitation>().HasData(
+    new TitreExploitation
+    {
+        Id = 1,
+        ExploitantId = 1,
+        TypeTitreId = 1,
+        ReferenceTitre = "TITRE-001",
+        DateSignature = new DateTime(2025, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+        DateExpiration = new DateTime(2026, 10, 1, 0, 0, 0, DateTimeKind.Utc),
+        Statut = "Actif",
+        NombreTitres = 1,
+        ServiceId = 1,
+        UtilisateurId = 1,
+        Actif = true
+    },
+    new TitreExploitation
+    {
+        Id = 2,
+        ExploitantId = 2,
+        TypeTitreId = 1,
+        ReferenceTitre = "TITRE-002",
+        DateSignature = new DateTime(2021, 4, 1, 0, 0, 0, DateTimeKind.Utc),
+        DateExpiration = new DateTime(2026, 4, 25, 0, 0, 0, DateTimeKind.Utc),
+        Statut = "Bientôt expiré",
+        NombreTitres = 2,
+        ServiceId = 1,
+        UtilisateurId = 1,
+        Actif = true
+    },
+    new TitreExploitation
+    {
+        Id = 3,
+        ExploitantId = 3,
+        TypeTitreId = 1,
+        ReferenceTitre = "TITRE-003",
+        DateSignature = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+        DateExpiration = new DateTime(2025, 4, 10, 0, 0, 0, DateTimeKind.Utc),
+        Statut = "Expiré",
+        NombreTitres = 1,
+        ServiceId = 1,
+        UtilisateurId = 1,
+        Actif = false
+    }
+);
+
             modelBuilder.Entity<Alerte>()
                 .HasIndex(a => new { a.TitreExploitationId, a.TypeAlerte })
                 .IsUnique();
