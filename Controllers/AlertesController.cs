@@ -1,47 +1,33 @@
-using ArtGestion.Data;
-using ArtGestion.ServicesMetier;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ArtGestion.Data;
+using ArtGestion.Models;
 
 namespace ArtGestion.Controllers
 {
     public class AlertesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly AlerteService _alerteService;
 
-        public AlertesController(ApplicationDbContext context, AlerteService alerteService)
+        public AlertesController(ApplicationDbContext context)
         {
             _context = context;
-            _alerteService = alerteService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            await _alerteService.GenererAlertesExpirationAsync();
-
-            var alertes = await _context.Alertes
-                .Include(a => a.TitreExploitation)
-                    .ThenInclude(t => t!.Exploitant)
-                .OrderByDescending(a => a.DateGeneration)
-                .ToListAsync();
-
+            var alertes = _context.Alertes.ToList();
             return View(alertes);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MarquerCommeLue(int id)
+        public IActionResult MarquerCommeLue(int id)
         {
-            var alerte = await _context.Alertes.FindAsync(id);
+            var alerte = _context.Alertes.Find(id);
             if (alerte != null)
             {
-                alerte.EstLue = true;
-                alerte.DateLecture = DateTime.UtcNow;
-                await _context.SaveChangesAsync();
+                alerte.Lue = true;
+                _context.SaveChanges();
             }
-
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
     }
 }

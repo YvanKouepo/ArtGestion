@@ -20,7 +20,20 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.TypeAlerte</td>
+            <td>
+                @if (item.TypeAlerte == "Expiré")
+                {
+                    <span class="badge bg-danger">Expiré</span>
+                }
+                else if (item.TypeAlerte == "Bientôt expiré")
+                {
+                    <span class="badge bg-warning text-dark">Bientôt expiré</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">@item.TypeAlerte</span>
+                }
+            </td>
             <td>@item.Message</td>
             <td>@item.DateGeneration.ToString("dd/MM/yyyy HH:mm")</td>
             <td>
@@ -30,16 +43,22 @@
                 }
                 else
                 {
-                    <span class="badge bg-warning text-dark">Non lue</span>
+                    <span class="badge bg-danger">Non lue</span>
                 }
             </td>
             <td>
                 @if (!item.EstLue)
                 {
-                    <form asp-action="MarquerCommeLue" method="post">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-sm btn-primary">Marquer comme lue</button>
-                    </form>
+                    <a asp-controller="Alertes"
+                       asp-action="MarquerCommeLue"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-primary">
+                        Voir
+                    </a>
+                }
+                else
+                {
+                    <span class="text-muted">Déjà lue</span>
                 }
             </td>
         </tr>
