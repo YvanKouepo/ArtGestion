@@ -3,6 +3,14 @@
 
 @{
     ViewData["Title"] = "Tableau de bord";
+    <div class="mb-3">
+    <a asp-controller="Exports" asp-action="ExcelSynthese" class="btn btn-success me-2">
+        Export Excel
+    </a>
+    <a asp-controller="Exports" asp-action="PdfSynthese" class="btn btn-danger">
+        Export PDF
+    </a>
+</div>
 }
 
 <h2>Tableau de bord</h2>
