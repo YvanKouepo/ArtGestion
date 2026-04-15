@@ -1,0 +1,18 @@
+namespace ArtGestion.Models
+{
+    public class DashboardViewModel
+    {
+        public int TotalExploitants { get; set; }
+        public int TotalTitres { get; set; }
+        public int Actifs { get; set; }
+        public int BientotExpires { get; set; }
+        public int Expires { get; set; }
+        public int AlertesNonLues { get; set; }
+
+        public List<string> RegionsLabels { get; set; } = new();
+        public List<int> RegionsCounts { get; set; } = new();
+
+        public List<string> TypesTitreLabels { get; set; } = new();
+        public List<int> TypesTitreCounts { get; set; } = new();
+    }
+}

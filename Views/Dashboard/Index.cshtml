@@ -1,3 +1,6 @@
+@model ArtGestion.Models.DashboardViewModel
+@using System.Text.Json
+
 @{
     ViewData["Title"] = "Tableau de bord";
 }
@@ -5,59 +8,108 @@
 <h2>Tableau de bord</h2>
 
 <div class="row">
-
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card bg-primary text-white mb-3">
             <div class="card-body">
-                <h5>Exploitants</h5>
-                <h3>@ViewBag.TotalExploitants</h3>
+                <h6>Exploitants</h6>
+                <h3>@Model.TotalExploitants</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card bg-dark text-white mb-3">
             <div class="card-body">
-                <h5>Total Titres</h5>
-                <h3>@ViewBag.TotalTitres</h3>
+                <h6>Total titres</h6>
+                <h3>@Model.TotalTitres</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card bg-success text-white mb-3">
             <div class="card-body">
-                <h5>Actifs</h5>
-                <h3>@ViewBag.Actifs</h3>
+                <h6>Actifs</h6>
+                <h3>@Model.Actifs</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card bg-warning text-dark mb-3">
             <div class="card-body">
-                <h5>Bientôt expirés</h5>
-                <h3>@ViewBag.BientotExpires</h3>
+                <h6>Bientôt expirés</h6>
+                <h3>@Model.BientotExpires</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card bg-danger text-white mb-3">
             <div class="card-body">
-                <h5>Expirés</h5>
-                <h3>@ViewBag.Expires</h3>
+                <h6>Expirés</h6>
+                <h3>@Model.Expires</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card bg-info text-white mb-3">
             <div class="card-body">
-                <h5>Alertes non lues</h5>
-                <h3>@ViewBag.AlertesNonLues</h3>
+                <h6>Alertes non lues</h6>
+                <h3>@Model.AlertesNonLues</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Exploitants par région</div>
+            <div class="card-body">
+                <canvas id="regionsChart"></canvas>
             </div>
         </div>
     </div>
 
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Titres par type</div>
+            <div class="card-body">
+                <canvas id="typesTitreChart"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const regionsLabels = @Html.Raw(JsonSerializer.Serialize(Model.RegionsLabels));
+    const regionsCounts = @Html.Raw(JsonSerializer.Serialize(Model.RegionsCounts));
+
+    const typesTitreLabels = @Html.Raw(JsonSerializer.Serialize(Model.TypesTitreLabels));
+    const typesTitreCounts = @Html.Raw(JsonSerializer.Serialize(Model.TypesTitreCounts));
+
+    new Chart(document.getElementById('regionsChart'), {
+        type: 'bar',
+        data: {
+            labels: regionsLabels,
+            datasets: [{
+                label: 'Exploitants',
+                data: regionsCounts
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('typesTitreChart'), {
+        type: 'pie',
+        data: {
+            labels: typesTitreLabels,
+            datasets: [{
+                label: 'Titres',
+                data: typesTitreCounts
+            }]
+        }
+    });
+</script>
