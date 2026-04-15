@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArtGestion.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260414112653_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260415093618_InitClean")]
+    partial class InitClean
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,64 @@ namespace ArtGestion.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ArtGestion.Models.Alerte", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateGeneration")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateLecture")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("EstLue")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Lue")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TitreExploitationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TypeAlerte")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("UtilisateurResponsableId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UtilisateurResponsableId");
+
+                    b.HasIndex("TitreExploitationId", "TypeAlerte")
+                        .IsUnique();
+
+                    b.ToTable("Alertes");
+                });
 
             modelBuilder.Entity("ArtGestion.Models.Exploitant", b =>
                 {
@@ -77,6 +135,87 @@ namespace ArtGestion.Migrations
                     b.HasIndex("VilleId");
 
                     b.ToTable("Exploitants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodeExploitant = "EXP001",
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7792),
+                            NomExploitant = "MTN Cameroun",
+                            RegionId = 1,
+                            ServiceId = 1,
+                            TypeEntrepriseId = 1,
+                            UtilisateurId = 1,
+                            VilleId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CodeExploitant = "EXP002",
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7800),
+                            NomExploitant = "Orange Cameroun",
+                            RegionId = 1,
+                            ServiceId = 1,
+                            TypeEntrepriseId = 1,
+                            UtilisateurId = 1,
+                            VilleId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CodeExploitant = "EXP003",
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7802),
+                            NomExploitant = "Nexttel",
+                            RegionId = 2,
+                            ServiceId = 1,
+                            TypeEntrepriseId = 2,
+                            UtilisateurId = 1,
+                            VilleId = 2
+                        });
+                });
+
+            modelBuilder.Entity("ArtGestion.Models.LogAction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Entite")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("EntiteId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TypeAction")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("UtilisateurId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UtilisateurId");
+
+                    b.ToTable("LogsActions");
                 });
 
             modelBuilder.Entity("ArtGestion.Models.Region", b =>
@@ -102,6 +241,22 @@ namespace ArtGestion.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            Code = "LT",
+                            Nom = "Littoral"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Actif = true,
+                            Code = "SW",
+                            Nom = "Sud-Ouest"
+                        });
                 });
 
             modelBuilder.Entity("ArtGestion.Models.Service", b =>
@@ -135,6 +290,15 @@ namespace ArtGestion.Migrations
                         .IsUnique();
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            Code = "SSVTSE",
+                            Nom = "Service du Suivi des Services, de la Veille Technologique et des Statistiques Économiques"
+                        });
                 });
 
             modelBuilder.Entity("ArtGestion.Models.TitreExploitation", b =>
@@ -161,21 +325,18 @@ namespace ArtGestion.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("FrequencesAssignees")
-                        .HasMaxLength(300)
-                        .HasColumnType("character varying(300)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("NombreTitres")
                         .HasColumnType("integer");
 
                     b.Property<string>("Observation")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ReferenceTitre")
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("text");
 
-                    b.Property<int>("ServiceSourceId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Statut")
@@ -189,7 +350,7 @@ namespace ArtGestion.Migrations
                     b.Property<int>("TypeTitreId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UtilisateurCreateurId")
+                    b.Property<int>("UtilisateurId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -198,15 +359,62 @@ namespace ArtGestion.Migrations
 
                     b.HasIndex("ReferenceTitre");
 
-                    b.HasIndex("ServiceSourceId");
+                    b.HasIndex("ServiceId");
 
                     b.HasIndex("TypeReseauId");
 
                     b.HasIndex("TypeTitreId");
 
-                    b.HasIndex("UtilisateurCreateurId");
+                    b.HasIndex("UtilisateurId");
 
                     b.ToTable("TitresExploitation");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            DateExpiration = new DateTime(2026, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7827),
+                            DateSignature = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExploitantId = 1,
+                            NombreTitres = 1,
+                            ReferenceTitre = "TITRE-001",
+                            ServiceId = 1,
+                            Statut = "Actif",
+                            TypeTitreId = 1,
+                            UtilisateurId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Actif = true,
+                            DateExpiration = new DateTime(2026, 4, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7836),
+                            DateSignature = new DateTime(2021, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExploitantId = 2,
+                            NombreTitres = 2,
+                            ReferenceTitre = "TITRE-002",
+                            ServiceId = 1,
+                            Statut = "Bientôt expiré",
+                            TypeTitreId = 1,
+                            UtilisateurId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Actif = false,
+                            DateExpiration = new DateTime(2025, 4, 10, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7838),
+                            DateSignature = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ExploitantId = 3,
+                            NombreTitres = 1,
+                            ReferenceTitre = "TITRE-003",
+                            ServiceId = 1,
+                            Statut = "Expiré",
+                            TypeTitreId = 1,
+                            UtilisateurId = 1
+                        });
                 });
 
             modelBuilder.Entity("ArtGestion.Models.TypeEntreprise", b =>
@@ -227,6 +435,20 @@ namespace ArtGestion.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TypesEntreprise");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            Libelle = "Opérateur"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Actif = true,
+                            Libelle = "Fournisseur"
+                        });
                 });
 
             modelBuilder.Entity("ArtGestion.Models.TypeReseau", b =>
@@ -274,6 +496,16 @@ namespace ArtGestion.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TypesTitre");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            DureeValidite = 5,
+                            Libelle = "Licence",
+                            UniteDuree = "Ans"
+                        });
                 });
 
             modelBuilder.Entity("ArtGestion.Models.Utilisateur", b =>
@@ -328,6 +560,21 @@ namespace ArtGestion.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Utilisateurs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            DateCreation = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7738),
+                            Email = "admin@art.local",
+                            EstResponsableService = true,
+                            Login = "admin",
+                            MotDePasseHash = "temp-hash",
+                            NomComplet = "Admin SSVTSE",
+                            Role = "Admin",
+                            ServiceId = 1
+                        });
                 });
 
             modelBuilder.Entity("ArtGestion.Models.Ville", b =>
@@ -354,6 +601,47 @@ namespace ArtGestion.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("Villes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Actif = true,
+                            Nom = "Douala",
+                            RegionId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Actif = true,
+                            Nom = "Buea",
+                            RegionId = 2
+                        });
+                });
+
+            modelBuilder.Entity("ArtGestion.Models.Alerte", b =>
+                {
+                    b.HasOne("ArtGestion.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ArtGestion.Models.TitreExploitation", "TitreExploitation")
+                        .WithMany()
+                        .HasForeignKey("TitreExploitationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ArtGestion.Models.Utilisateur", "UtilisateurResponsable")
+                        .WithMany()
+                        .HasForeignKey("UtilisateurResponsableId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Service");
+
+                    b.Navigation("TitreExploitation");
+
+                    b.Navigation("UtilisateurResponsable");
                 });
 
             modelBuilder.Entity("ArtGestion.Models.Exploitant", b =>
@@ -399,6 +687,23 @@ namespace ArtGestion.Migrations
                     b.Navigation("Ville");
                 });
 
+            modelBuilder.Entity("ArtGestion.Models.LogAction", b =>
+                {
+                    b.HasOne("ArtGestion.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ArtGestion.Models.Utilisateur", "Utilisateur")
+                        .WithMany()
+                        .HasForeignKey("UtilisateurId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Service");
+
+                    b.Navigation("Utilisateur");
+                });
+
             modelBuilder.Entity("ArtGestion.Models.TitreExploitation", b =>
                 {
                     b.HasOne("ArtGestion.Models.Exploitant", "Exploitant")
@@ -407,9 +712,9 @@ namespace ArtGestion.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ArtGestion.Models.Service", "ServiceSource")
+                    b.HasOne("ArtGestion.Models.Service", "Service")
                         .WithMany("TitresExploitation")
-                        .HasForeignKey("ServiceSourceId")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -424,21 +729,21 @@ namespace ArtGestion.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ArtGestion.Models.Utilisateur", "UtilisateurCreateur")
+                    b.HasOne("ArtGestion.Models.Utilisateur", "Utilisateur")
                         .WithMany("TitresCrees")
-                        .HasForeignKey("UtilisateurCreateurId")
+                        .HasForeignKey("UtilisateurId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Exploitant");
 
-                    b.Navigation("ServiceSource");
+                    b.Navigation("Service");
 
                     b.Navigation("TypeReseau");
 
                     b.Navigation("TypeTitre");
 
-                    b.Navigation("UtilisateurCreateur");
+                    b.Navigation("Utilisateur");
                 });
 
             modelBuilder.Entity("ArtGestion.Models.Utilisateur", b =>

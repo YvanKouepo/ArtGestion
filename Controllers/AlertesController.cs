@@ -1,24 +1,25 @@
 using ArtGestion.Data;
+using ArtGestion.ServicesMetier;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ArtGestion.ServicesMetier;
 
 namespace ArtGestion.Controllers
 {
     public class AlertesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly AlerteService _alerteService;
 
-        public AlertesController(ApplicationDbContext context)
+        public AlertesController(ApplicationDbContext context, AlerteService alerteService)
         {
             _context = context;
+            _alerteService = alerteService;
         }
 
         public async Task<IActionResult> Index()
         {
+            await _alerteService.GenererAlertesExpirationAsync();
 
-            await AlerteService.GenererAlertesExpirationAsync(_context);
-            
             var alertes = await _context.Alertes
                 .Include(a => a.TitreExploitation)
                     .ThenInclude(t => t!.Exploitant)
@@ -36,7 +37,7 @@ namespace ArtGestion.Controllers
             if (alerte != null)
             {
                 alerte.EstLue = true;
-                alerte.DateLecture = Helpers.DateHelper.GetCameroonTime();
+                alerte.DateLecture = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
             }
 

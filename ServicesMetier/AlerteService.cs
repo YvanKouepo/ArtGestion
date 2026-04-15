@@ -4,83 +4,60 @@ using Microsoft.EntityFrameworkCore;
 using ArtGestion.Models;
 namespace ArtGestion.ServicesMetier
 {
-    public static class AlerteService
+    public class AlerteService
     {
-        public static async Task GenererAlertesExpirationAsync(ApplicationDbContext context)
+
+        private readonly ApplicationDbContext _context;
+
+public AlerteService(ApplicationDbContext context)
+{
+    _context = context;
+}
+        public async Task GenererAlertesExpirationAsync()
+{
+    var aujourdHui = DateTime.UtcNow;
+    var seuil = aujourdHui.AddDays(30);
+    var titres = await _context.TitresExploitation
+        .Include(t => t.Exploitant)
+        .ToListAsync();
+
+    foreach (var titre in titres)
+    {
+        string typeAlerte = null;
+
+        if (titre.DateExpiration < aujourdHui)
         {
-            var today = DateHelper.GetCameroonTime().Date;
-            var seuil = today.AddDays(30);
-
-            var titres = await context.TitresExploitation
-                .Include(t => t.Exploitant)
-                .Include(t => t.TypeTitre)
-                .Where(t => t.Actif)
-                .ToListAsync();
-
-            foreach (var titre in titres)
-            {
-                string? typeAlerte = null;
-                string? message = null;
-
-                if (titre.DateExpiration.Date < today)
-                {
-                    typeAlerte = "Expiré";
-                    message = $"Le titre {titre.ReferenceTitre ?? "(sans référence)"} de l'exploitant {titre.Exploitant?.NomExploitant} est expiré depuis le {titre.DateExpiration:dd/MM/yyyy}.";
-                }
-                else if (titre.DateExpiration.Date <= seuil)
-                {
-                    typeAlerte = "Bientôt expiré";
-                    message = $"Le titre {titre.ReferenceTitre ?? "(sans référence)"} de l'exploitant {titre.Exploitant?.NomExploitant} expire le {titre.DateExpiration:dd/MM/yyyy}.";
-                }
-
-                if (typeAlerte is null || message is null)
-                    continue;
-
-                var alerteExistante = await context.Alertes
-                    .FirstOrDefaultAsync(a =>
-                        a.TitreExploitationId == titre.Id &&
-                        a.TypeAlerte == typeAlerte);
-
-                if (alerteExistante == null)
-                {
-                    var alerte = new Alerte
-                    {
-                        TitreExploitationId = titre.Id,
-                        TypeAlerte = typeAlerte,
-                        Message = message,
-                        DateGeneration = DateHelper.GetCameroonTime(),
-                        EstLue = false,
-                        ServiceId = titre.ServiceId
-                    };
-
-                    context.Alertes.Add(alerte);
-                }
-                else
-                {
-                    // Mise à jour de l’alerte existante si besoin
-                    if (alerteExistante.Message != message)
-                        alerteExistante.Message = message;
-
-                    // On remet l’alerte à jour si son contenu change
-                    alerteExistante.DateGeneration = DateHelper.GetCameroonTime();
-                }
-
-                // Si le titre est expiré, on retire l’ancienne alerte "Bientôt expiré"
-                if (typeAlerte == "Expiré")
-                {
-                    var alerteBientotExpiree = await context.Alertes
-                        .FirstOrDefaultAsync(a =>
-                            a.TitreExploitationId == titre.Id &&
-                            a.TypeAlerte == "Bientôt expiré");
-
-                    if (alerteBientotExpiree != null)
-                    {
-                        context.Alertes.Remove(alerteBientotExpiree);
-                    }
-                }
-            }
-
-            await context.SaveChangesAsync();
+            typeAlerte = "Expiré";
         }
+        else if (titre.DateExpiration <= seuil)
+        {
+            typeAlerte = "Bientôt expiré";
+        }
+
+        if (typeAlerte == null)
+            continue;
+
+        // 🔥 Anti doublon
+        bool existe = await _context.Alertes.AnyAsync(a =>
+            a.TitreExploitationId == titre.Id &&
+            a.Type == typeAlerte);
+
+        if (existe)
+            continue;
+
+        var alerte = new Alerte
+        {
+            TitreExploitationId = titre.Id,
+            Message = $"Le titre {titre.ReferenceTitre} de {titre.Exploitant.NomExploitant} est {typeAlerte}",
+            Type = typeAlerte,
+            DateCreation = DateTime.UtcNow,
+            Lue = false
+        };
+
+        _context.Alertes.Add(alerte);
+    }
+
+    await _context.SaveChangesAsync();
+}
     }
 }

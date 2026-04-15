@@ -7,6 +7,12 @@ namespace ArtGestion.Models
     {
         public int Id { get; set; }
 
+        public string Type { get; set; } = "";
+
+        public DateTime DateCreation { get; set; } = DateTime.UtcNow;
+
+        public bool Lue { get; set; } = false;
+
         public int TitreExploitationId { get; set; }
         public TitreExploitation? TitreExploitation { get; set; }
 

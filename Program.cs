@@ -1,6 +1,7 @@
 using ArtGestion.Data;
 using Microsoft.EntityFrameworkCore;
 using ArtGestion.Seed;
+using ArtGestion.ServicesMetier;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<AlerteService>();
 
 var app = builder.Build();
 

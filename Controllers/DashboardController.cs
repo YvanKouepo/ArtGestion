@@ -1,6 +1,6 @@
 using ArtGestion.Data;
-using ArtGestion.Helpers;
 using ArtGestion.Models;
+using ArtGestion.ServicesMetier;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,47 +9,37 @@ namespace ArtGestion.Controllers
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly AlerteService _alerteService;
 
-        public DashboardController(ApplicationDbContext context)
+        public DashboardController(ApplicationDbContext context, AlerteService alerteService)
         {
             _context = context;
+            _alerteService = alerteService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var today = DateTime.UtcNow.Date;
+            await _alerteService.GenererAlertesExpirationAsync();
 
-            var model = new DashboardViewModel
+            var exploitantsCount = await _context.Exploitants.CountAsync();
+            var titresCount = await _context.TitresExploitation.CountAsync();
+
+            var actifs = await _context.TitresExploitation.CountAsync(t => t.Statut == "Actif");
+            var bientotExpires = await _context.TitresExploitation.CountAsync(t => t.Statut == "Bientôt expiré");
+            var expires = await _context.TitresExploitation.CountAsync(t => t.Statut == "Expiré");
+            var alertesNonLues = await _context.Alertes.CountAsync(a => !a.EstLue);
+
+            var vm = new DashboardViewModel
             {
-                TotalExploitants = await _context.Exploitants.CountAsync(),
-                TotalTitres = await _context.TitresExploitation.CountAsync(),
-                Actifs = await _context.TitresExploitation.CountAsync(t => t.DateExpiration >= today.AddDays(30)),
-                BientotExpires = await _context.TitresExploitation.CountAsync(t => t.DateExpiration >= today && t.DateExpiration < today.AddDays(30)),
-                Expires = await _context.TitresExploitation.CountAsync(t => t.DateExpiration < today),
-                AlertesNonLues = await _context.Alertes.CountAsync(a => !a.EstLue)
+                TotalExploitants = exploitantsCount,
+                TotalTitres = titresCount,
+                Actifs = actifs,
+                BientotExpires = bientotExpires,
+                Expires = expires,
+                AlertesNonLues = alertesNonLues
             };
 
-            var regionsData = await _context.Exploitants
-                .Include(e => e.Region)
-                .GroupBy(e => e.Region!.Nom)
-                .Select(g => new { Region = g.Key, Count = g.Count() })
-                .OrderBy(x => x.Region)
-                .ToListAsync();
-
-            model.RegionsLabels = regionsData.Select(x => x.Region).ToList();
-            model.RegionsCounts = regionsData.Select(x => x.Count).ToList();
-
-            var typesTitreData = await _context.TitresExploitation
-                .Include(t => t.TypeTitre)
-                .GroupBy(t => t.TypeTitre!.Libelle)
-                .Select(g => new { TypeTitre = g.Key, Count = g.Count() })
-                .OrderBy(x => x.TypeTitre)
-                .ToListAsync();
-
-            model.TypesTitreLabels = typesTitreData.Select(x => x.TypeTitre).ToList();
-            model.TypesTitreCounts = typesTitreData.Select(x => x.Count).ToList();
-
-            return View(model);
+            return View(vm);
         }
     }
 }

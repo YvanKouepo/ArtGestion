@@ -30,6 +30,9 @@ namespace ArtGestion.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime>("DateGeneration")
                         .HasColumnType("timestamp with time zone");
 
@@ -37,6 +40,9 @@ namespace ArtGestion.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("EstLue")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Lue")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Message")
@@ -49,6 +55,10 @@ namespace ArtGestion.Migrations
 
                     b.Property<int>("TitreExploitationId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("TypeAlerte")
                         .IsRequired()
@@ -128,7 +138,7 @@ namespace ArtGestion.Migrations
                         {
                             Id = 1,
                             CodeExploitant = "EXP001",
-                            DateSaisie = new DateTime(2026, 4, 15, 9, 3, 54, 728, DateTimeKind.Utc).AddTicks(9950),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7792),
                             NomExploitant = "MTN Cameroun",
                             RegionId = 1,
                             ServiceId = 1,
@@ -140,7 +150,7 @@ namespace ArtGestion.Migrations
                         {
                             Id = 2,
                             CodeExploitant = "EXP002",
-                            DateSaisie = new DateTime(2026, 4, 15, 9, 3, 54, 728, DateTimeKind.Utc).AddTicks(9957),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7800),
                             NomExploitant = "Orange Cameroun",
                             RegionId = 1,
                             ServiceId = 1,
@@ -152,7 +162,7 @@ namespace ArtGestion.Migrations
                         {
                             Id = 3,
                             CodeExploitant = "EXP003",
-                            DateSaisie = new DateTime(2026, 4, 15, 9, 3, 54, 728, DateTimeKind.Utc).AddTicks(9960),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7802),
                             NomExploitant = "Nexttel",
                             RegionId = 2,
                             ServiceId = 1,
@@ -362,7 +372,7 @@ namespace ArtGestion.Migrations
                             Id = 1,
                             Actif = true,
                             DateExpiration = new DateTime(2026, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DateSaisie = new DateTime(2026, 4, 15, 9, 3, 54, 728, DateTimeKind.Utc).AddTicks(9995),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7827),
                             DateSignature = new DateTime(2025, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExploitantId = 1,
                             NombreTitres = 1,
@@ -377,7 +387,7 @@ namespace ArtGestion.Migrations
                             Id = 2,
                             Actif = true,
                             DateExpiration = new DateTime(2026, 4, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DateSaisie = new DateTime(2026, 4, 15, 9, 3, 54, 729, DateTimeKind.Utc).AddTicks(6),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7836),
                             DateSignature = new DateTime(2021, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExploitantId = 2,
                             NombreTitres = 2,
@@ -392,7 +402,7 @@ namespace ArtGestion.Migrations
                             Id = 3,
                             Actif = false,
                             DateExpiration = new DateTime(2025, 4, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DateSaisie = new DateTime(2026, 4, 15, 9, 3, 54, 729, DateTimeKind.Utc).AddTicks(8),
+                            DateSaisie = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7838),
                             DateSignature = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             ExploitantId = 3,
                             NombreTitres = 1,
@@ -553,7 +563,7 @@ namespace ArtGestion.Migrations
                         {
                             Id = 1,
                             Actif = true,
-                            DateCreation = new DateTime(2026, 4, 15, 9, 3, 54, 728, DateTimeKind.Utc).AddTicks(9883),
+                            DateCreation = new DateTime(2026, 4, 15, 9, 36, 18, 232, DateTimeKind.Utc).AddTicks(7738),
                             Email = "admin@art.local",
                             EstResponsableService = true,
                             Login = "admin",
