@@ -18,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="QuestPDF" Version="2026.2.4" />
+    <PackageReference Include="ScottPlot" Version="4.1.71" />
   </ItemGroup>
 
 </Project>

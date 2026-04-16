@@ -1,3 +1,4 @@
+using ArtGestion.Helpers;
 using ArtGestion.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -18,6 +19,16 @@ namespace ArtGestion.Documents
 
         public void Compose(IDocumentContainer container)
         {
+            var regionsChart = ChartHelper.GenererGraphiqueBarres(
+                _model.RegionsLabels,
+                _model.RegionsCounts,
+                "Exploitants par région");
+
+            var typesTitreChart = ChartHelper.GenererGraphiqueCamembert(
+                _model.TypesTitreLabels,
+                _model.TypesTitreCounts,
+    "Titres par type");
+
             container.Page(page =>
             {
                 page.Margin(30);
@@ -32,7 +43,7 @@ namespace ArtGestion.Documents
 
                 page.Content().Column(column =>
                 {
-                    column.Spacing(12);
+                    column.Spacing(15);
 
                     column.Item().Text("Indicateurs clés").Bold().FontSize(14);
 
@@ -57,6 +68,11 @@ namespace ArtGestion.Documents
                         Row("Titres expirés", _model.Expires.ToString());
                         Row("Alertes non lues", _model.AlertesNonLues.ToString());
                     });
+
+                    column.Item().PaddingTop(10).Text("Graphiques").Bold().FontSize(14);
+
+                    column.Item().Image(regionsChart);
+                    column.Item().Image(typesTitreChart);
 
                     column.Item().PaddingTop(10).Text("Répartition par région").Bold().FontSize(14);
 
