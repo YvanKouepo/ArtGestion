@@ -1,3 +1,4 @@
+using ArtGestion.Helpers;
 using ArtGestion.Models;
 using Microsoft.EntityFrameworkCore;
 

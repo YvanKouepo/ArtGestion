@@ -28,6 +28,23 @@
     }, 5000); // toutes les 5 secondes
 </script>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav">
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <li class="nav-item">
+            <span class="nav-link text-dark">Bonjour, @User.Identity.Name</span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Déconnexion</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Connexion</a>
+        </li>
+    }
+</ul>
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Accueil</a>

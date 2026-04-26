@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ArtGestion.Data;
 using ArtGestion.Models;
 using ArtGestion.ServicesMetier;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtGestion.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;

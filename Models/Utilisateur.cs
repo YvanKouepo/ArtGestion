@@ -27,7 +27,7 @@ namespace ArtGestion.Models
 
         [Required]
         [StringLength(50)]
-        public string Role { get; set; } = "Utilisateur";
+        public string Role { get; set; } = "Agent";
 
         public bool EstResponsableService { get; set; } = false;
         public bool Actif { get; set; } = true;
@@ -35,7 +35,6 @@ namespace ArtGestion.Models
         public DateTime DateCreation { get; set; } = DateTime.UtcNow;
 
         public ICollection<Exploitant> ExploitantsCrees { get; set; } = new List<Exploitant>();
-        
         public ICollection<TitreExploitation> TitresCrees { get; set; } = new List<TitreExploitation>();
     }
 }

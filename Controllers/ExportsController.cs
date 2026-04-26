@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using ArtGestion.Data;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using QuestPDF.Infrastructure;
 
 namespace ArtGestion.Controllers
 {
+    [Authorize]
     public class ExportsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ArtGestion.Data;
 using ArtGestion.Models;
 
 namespace ArtGestion.Controllers
 {
+    [Authorize]
+
     public class AlertesController : Controller
     {
         private readonly ApplicationDbContext _context;
