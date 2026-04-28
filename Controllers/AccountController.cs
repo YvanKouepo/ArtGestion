@@ -1,26 +1,28 @@
-using System.Security.Claims;
-using ArtGestion.Data;
-using ArtGestion.Helpers;
 using ArtGestion.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ArtGestion.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Dashboard");
+
             return View();
         }
 
@@ -31,37 +33,33 @@ namespace ArtGestion.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var utilisateur = await _context.Utilisateurs
-                .Include(u => u.Service)
-                .FirstOrDefaultAsync(u => u.Login == model.Login && u.Actif);
+            var user = await _userManager.FindByNameAsync(model.Login);
 
-            if (utilisateur == null || !PasswordHelper.VerifyPassword(model.Password, utilisateur.MotDePasseHash))
+            if (user == null || !user.Actif)
             {
                 ModelState.AddModelError("", "Login ou mot de passe invalide.");
                 return View(model);
             }
 
-            var claims = new List<Claim>
+            var result = await _signInManager.PasswordSignInAsync(
+                user,
+                model.Password,
+                isPersistent: false,
+                lockoutOnFailure: false);
+
+            if (!result.Succeeded)
             {
-                new Claim(ClaimTypes.NameIdentifier, utilisateur.Id.ToString()),
-                new Claim(ClaimTypes.Name, utilisateur.NomComplet),
-                new Claim(ClaimTypes.Role, utilisateur.Role),
-                new Claim("ServiceId", utilisateur.ServiceId.ToString()),
-                new Claim("ServiceNom", utilisateur.Service?.Nom ?? "")
-            };
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                ModelState.AddModelError("", "Login ou mot de passe invalide.");
+                return View(model);
+            }
 
             return RedirectToAction("Index", "Dashboard");
         }
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
 
         public IActionResult AccessDenied()
