@@ -29,6 +29,7 @@
 </script>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
         <ul class="navbar-nav">
+     
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
@@ -44,6 +45,18 @@
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Connexion</a>
         </li>
     }
+       @if (User.IsInRole("SuperAdmin"))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Services" asp-action="Index">Services</a>
+    </li>
+    @if (User.IsInRole("SuperAdmin"))
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Users" asp-action="Index">Utilisateurs</a>
+    </li>
+}
+}
 </ul>
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">

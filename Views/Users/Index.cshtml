@@ -1,0 +1,27 @@
+@model IEnumerable<ArtGestion.Models.ApplicationUser>
+
+<h2>Utilisateurs</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Créer utilisateur</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Service</th>
+            <th>Actif</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var u in Model)
+    {
+        <tr>
+            <td>@u.UserName</td>
+            <td>@u.Email</td>
+            <td>@u.Service?.Nom</td>
+            <td>@(u.Actif ? "Oui" : "Non")</td>
+        </tr>
+    }
+    </tbody>
+</table>

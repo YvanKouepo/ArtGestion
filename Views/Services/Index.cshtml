@@ -1,0 +1,33 @@
+@model IEnumerable<ArtGestion.Models.Service>
+
+<h2>Gestion des services</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Créer un service</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Actif</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var service in Model)
+    {
+        <tr>
+            <td>@service.Code</td>
+            <td>@service.Nom</td>
+            <td>@service.Description</td>
+            <td>@(service.Actif ? "Actif" : "Inactif")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@service.Id" class="btn btn-sm btn-warning">Modifier</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

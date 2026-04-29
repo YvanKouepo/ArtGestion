@@ -1,0 +1,30 @@
+<h2>Créer utilisateur</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label>Login</label>
+        <input name="username" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input name="email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mot de passe</label>
+        <input name="password" type="password" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Rôle</label>
+        <select name="role" asp-items="ViewBag.Roles" class="form-control"></select>
+    </div>
+
+    <div class="mb-3">
+        <label>Service</label>
+        <select name="serviceId" asp-items="ViewBag.Services" class="form-control"></select>
+    </div>
+
+    <button class="btn btn-success">Créer</button>
+</form>
