@@ -1,9 +1,11 @@
 using ArtGestion.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtGestion.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class LogsActionsController : Controller
     {
         private readonly ApplicationDbContext _context;
